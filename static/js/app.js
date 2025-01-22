@@ -68,19 +68,18 @@ function buildCharts(sample) {
     // For the Bar Chart, map the otu_ids to a list of strings for your yticks
     slicedId = otu_ids.slice(0,10);
     slicedValue = sample_values.slice(0,10);
-    console.log(slicedId)
     slicedId.reverse()
     slicedValue.reverse()
     let stringed = [slicedId.length]
     for(i=0;i<slicedId.length;i++){
-      stringed[i] = slicedId[i].toString();
+      stringed[i] = "OTU ID " + slicedId[i].toString();
     }
     // Build a Bar Chart
     // Don't forget to slice and reverse the input data appropriately
     let barTrace = {
       x: slicedValue,
+      y: stringed,
       yticks: slicedId,
-      text: stringed,
       type: 'bar',
       orientation: "h",
       
@@ -88,6 +87,9 @@ function buildCharts(sample) {
     let barData = [barTrace]
     let barLayout = {
       title: "Top 10 Bacteria Cultures Found",
+      xaxis: {
+        title:"Number of Bacteria",
+      },
     };
     // Render the Bar Chart
     Plotly.newPlot("bar", barData,barLayout);
@@ -123,7 +125,8 @@ function init() {
 // Function for event listener
 function optionChanged(newSample) {
   // Build charts and metadata panel each time a new sample is selected
-
+  buildCharts(newSample);
+  buildMetadata(newSample);
 }
 
 // Initialize the dashboard

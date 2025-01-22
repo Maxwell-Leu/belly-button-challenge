@@ -44,14 +44,26 @@ function buildCharts(sample) {
       y: sample_values,
       text: otu_labels,
       mode:'markers',
-      markers: {
+      marker: {
         color: otu_ids,
         size: sample_values,
       }
     }
+
     let bubbleData = [bubbleTrace];
+
+    let bubbleLayout = {
+      title: "Bacteria Cultures Per Sample",
+      xaxis: {
+        title:"OTU ID",
+      },
+      yaxis:
+      {
+        title:"Number of Bacteria",
+      },
+    }
     // Render the Bubble Chart
-    Plotly.newPlot("bubble",bubbleData)
+    Plotly.newPlot("bubble",bubbleData,bubbleLayout)
 
     // For the Bar Chart, map the otu_ids to a list of strings for your yticks
     slicedId = otu_ids.slice(0,10);
